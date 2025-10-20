@@ -9,6 +9,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=5)
 
 db = SQLAlchemy(app)
+with app.app_context():
+	db.create_all()
 
 class users(db.Model):
 	id = db.Column("id", db.Integer, primary_key=True)
@@ -91,8 +93,5 @@ def logout():
     return redirect(url_for("login"))
 
 if __name__ == '__main__':
-	with app.app_context():
-		db.create_all()
-		db.create_all()
 	app.run(debug=True)
 	
