@@ -1,14 +1,16 @@
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__)
 app.secret_key = "wxyz"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tmp/users.sqlite3'  # ← 3 SLASHES!
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/users.sqlite3'  # ← 4 SLASHES!
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=5)
 
 db = SQLAlchemy(app)
+os.makedirs('/tmp', exist_ok=True)
 with app.app_context():
 	db.create_all()
 
@@ -95,5 +97,6 @@ def logout():
 if __name__ == '__main__':
 	app.run(debug=True)
 	
+
 
 
